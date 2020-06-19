@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ roleId }}
     <!-- <div class="right"> -->
     <el-select
       v-model="roleId"

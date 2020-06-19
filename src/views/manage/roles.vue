@@ -164,8 +164,7 @@ export default {
                             })
                             this.reloadRole();
                         }
-                    }
-                );
+                    });
             })
             
         }

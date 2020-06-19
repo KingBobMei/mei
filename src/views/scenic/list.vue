@@ -26,6 +26,17 @@
         label="景点名称"
       />
       <el-table-column
+        label="景点主图"
+      >
+        <template slot-scope="scope">
+          <el-image
+            :src="scope.row.imageUrl"
+            style="width: 100px; height: 100px"
+            :fit="fit"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="country"
         label="所属国家"
       />
@@ -63,7 +74,7 @@ export default {
             scenicCategory:"",
             name:"",
             scenicListDto:[],
-            
+            fit:"cover",
         }
     },
     created(){
@@ -78,7 +89,7 @@ export default {
             )
         },
         showDetail(id){
-          this.$router.push({ path: 'scenic/editor', query: id});
+          this.$router.push({ name: 'scenicDetail', params:{id : id}});
         }
     }
 }

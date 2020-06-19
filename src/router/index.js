@@ -123,6 +123,21 @@ export const asyncRoutes = [
         component: ()=> import('@/views/scenic/add'),
         name: '添加景点',
         meta: {title: '添加景点',icon:'documentation',affix: true}
+      },
+    ]
+  },
+  {
+    path: 'scenic',
+    component: Layout,
+    redirect:'/scenic/editor',
+    hidden: true,
+    children:[
+      {
+        path: 'editor',
+        component: () => import('@/views/scenic/editor'),
+        hidden: true,
+        name: 'scenicDetail',
+        meta: {title: '景点详情',icon: 'documentation',affix: true}
       }
     ]
   },

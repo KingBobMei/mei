@@ -1,40 +1,19 @@
 <template>
   <div>
-    <el-form
-      :model="scenic"
-      label-width="100px"
-    >
+    <el-form v-model="scenicDTO">
       <el-form-item label="景点名称">
-        <el-input v-model="scenic.scenicName" />
-      </el-form-item>
-      <el-form-item label="所属国家">
-        <el-select
-          v-model="scenic.country"
-          placeholder="请选择国家"
+        <input
+          v-model="scenicDTO.scenicName"
+          readonly="true"
         >
-          <el-option
-            v-for="c in allCountry"
-            :key="c.id"
-            :value="c.countryNameCn"
-            :label="c.countryNameCn"
-          />
-        </el-select>
       </el-form-item>
-      <el-form-item label="所属分类">
-        <el-select
-          v-model="scenic.tag"
-          placeholder="请选择分类"
-        >
-          <el-option
-            v-for="c in allCountry"
-            :key="c.id"
-            :value="c.id"
-            :label="c.countryNameCn"
-          />
-        </el-select>
+      <el-form-item label="景点区域">
+        <input v-model="scenicDTO.country">
       </el-form-item>
-
-      <el-form-item label="上传主图">
+      <el-form-item label="景点标签">
+        <input v-model="scenicDTO.tag">
+      </el-form-item>
+      <el-form-item label="景点主图">
         <el-upload
           class="avatar-uploader"
           action="http://localhost:8080/upload/picture"
@@ -43,8 +22,8 @@
           :before-upload="beforeAvatarUpload"
         >
           <img
-            v-if="imageUrl"
-            :src="imageUrl"
+            v-if="'http://localhost:8080/image/'+scenicDTO.imageUrl"
+            :src="'http://localhost:8080/image/'+scenicDTO.imageUrl"
             class="avatar"
           >
           <i
@@ -53,77 +32,65 @@
           />
         </el-upload>
       </el-form-item>
-            
-      <el-form-item label="简介">
-        <el-input
-          v-model="scenic.context"
-          type="textarea"
-          :rows="2"
-          placeholder="请输入内容"
+      <el-form-item label="景点介绍">
+        <textarea
+          v-model="scenicDTO.context"
+          style="width: 800px; height: 100px"
         />
       </el-form-item>
       <el-form-item>
         <el-button
           type="primary"
-          @click="sublimt"
+          size="small"
+          @click="toSave()"
         >
-          景点发布
+          保存
         </el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
-import request from "@/utils/request";
+import request from "@/utils/request"
 export default {
     data(){
         return {
-            allCountry:[],
-            scenic: {
-                scenicName: "",
-                country: "",
-                tag: "",
-                context: "",
-                imageUrl:""
-            },
-            tags: [],
-            imageUrl:"",
+            id: '',
+            scenicDTO:{},
         }
     },
     created(){
-        this.reloadData();
+        this.id = this.$route.params.id;
+        this.reloadData(this.id);
     },
-    methods: {
-        reloadData(){
-            let url = "country/list";
-            request.get(url)
-            .then(response => {
-                this.allCountry = response.data
-            })
+    methods:{
+        reloadData(id){
+            let url = "scenic/getScenicById";
+            request.request({url,method:"post",headers:{'Content-Type':'application/json'},data:id})
+            .then( response =>{
+                this.scenicDTO = response.data;
+            });
         },
-        sublimt(){
-            let url = "/scenic/add";
+        toSave(){
+            let url = "/scenic/updateScenic";
             request.request({
                 url,
                 method: "post",
                 headers: {
                     'Content-Type':'application/json'
                 },
-                data: this.scenic
+                data: this.scenicDTO
             }).then(response =>{
                 if(response.code === '2000'){
                     this.$message({
-                        message: "添加成功",
+                        message: "更新成功",
                         type: "success"
                     })
-                    this.scenic = "";
-                    this.imageUrl = "";
                 }
             })
         },
         handleAvatarSuccess(res) {
-          this.scenic.imageUrl = res.data;
-          this.imageUrl = 'http://localhost:8080/image/' + res.data;
+          this.scenicDTO.imageUrl = res.data;
         },
         beforeAvatarUpload(file) {
           const isPicture = (file.type === 'image/png' || file.type === 'image/gif' || file.type === 'image/jpg' || file.type === 'image/jpeg');
@@ -137,7 +104,6 @@ export default {
           return isPicture && isLt2M;
         }
     }
-    
 }
 </script>
 <style scoped>
