@@ -21,6 +21,7 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
 
   if (hasToken) {
+    console.log("有token 哈哈哈哈")
     if(to.path === '/user/register'){console.log('带着token跳转到register')} 
 
     if (to.path === '/login') {
@@ -58,6 +59,7 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
+    console.log("没有token 哈哈哈哈")
     if(to.path === '/user/register'){console.log('带着token跳转到register')} 
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly

@@ -91,7 +91,7 @@ export const constantRoutes = [
       {
         path: 'index',
         component: () => import('@/views/profile/index'),
-        name: 'Profile',
+        name: 'profileIndex',
         meta: { title: '我的主页', icon: 'user', noCache: true }
       }
     ]
@@ -116,13 +116,13 @@ export const asyncRoutes = [
         path: 'list',
         component: () => import('@/views/scenic/list'),
         name: '景点百科',
-        meta: {title: '景点百科',icon: 'documentation',affix: true}
+        meta: {title: '景点百科',icon: 'documentation',affix: true,roles: ['admin','editor']}
       },
       {
         path: 'add',
         component: ()=> import('@/views/scenic/add'),
         name: '添加景点',
-        meta: {title: '添加景点',icon:'documentation',affix: true}
+        meta: {title: '添加景点',icon:'documentation',affix: true,roles: ['admin','editor']}
       },
     ]
   },
@@ -151,7 +151,7 @@ export const asyncRoutes = [
         path: 'register',
         component: () => import('@/views/login/register'),
         name: '注册页面',
-        meta: {title:'注册页面', icon: 'documentation', affix: true,roles: ['visitor']}
+        meta: {title:'注册页面', icon: 'documentation', affix: true}
       }
     ]
   },

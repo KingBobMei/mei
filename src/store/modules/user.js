@@ -40,8 +40,9 @@ const actions = {
           dispatch('/register')
           // this.router.push({path : '/register'})
         }
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        console.log(data)
+        commit('SET_TOKEN', data)
+        setToken(data.id)
         resolve(response)
       }).catch(error => {
         reject(error)

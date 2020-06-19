@@ -50,9 +50,12 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/profile/index">
-            <el-dropdown-item>Profile</el-dropdown-item>
-          </router-link>
+          <el-dropdown-item
+            divided
+            @click.native="toProfile"
+          >
+            Profile
+          </el-dropdown-item>
           <el-dropdown-item
             divided
             @click.native="logout"
@@ -73,6 +76,8 @@ import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
+import store from '@/store'
+import request from "@/utils/request"
 
 export default {
   components: {
@@ -97,6 +102,11 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    toProfile() {
+      const userId = store.getters.token.id;
+      console.log("即将查询自己的主页" + userId);
+      this.$router.push({ name: 'profileIndex', params:{userId : userId}});
     }
   }
 }

@@ -48,14 +48,14 @@
           <el-button
             type="primary"
             size="small"
-            plain=""
+            @click="toQuery(scope.row.userId)"
           >
             查看主页
           </el-button>
           <el-button
             type="danger"
             size="small"
-            @click="toDelete(scope.row.id)"
+            @click="toDelete(scope.row.userId)"
           >
             屏蔽该用户
           </el-button>
@@ -94,6 +94,10 @@ export default {
             let url = "admin/roleList";
             request.request({url,method:"get",headers:{'Content-Type':'application/json'}})
                     .then(response => { this.roleDtoList = response.data});
+        },
+        toQuery(userId){
+          console.log("要去查看别人的id" + userId);
+          this.$router.push({ name: 'profileIndex', params:{userId : userId}});
         }
     }
 }
