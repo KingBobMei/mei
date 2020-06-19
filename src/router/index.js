@@ -77,8 +77,8 @@ export const constantRoutes = [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: '关于我们', icon: 'dashboard', affix: true }
+        name: '首页',
+        meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -92,10 +92,11 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/profile/index'),
         name: 'Profile',
-        meta: { title: 'Profile', icon: 'user', noCache: true }
+        meta: { title: '我的主页', icon: 'user', noCache: true }
       }
     ]
   }
+  
 ]
 
 /**
@@ -106,6 +107,7 @@ export const asyncRoutes = [
   {
     path: '/scenic',
     component: Layout,
+    redirect:'/scenic/list',
     hidden: false,
     name: '景点',
     meta: {title: '景点',icon: 'guide'},
@@ -125,21 +127,6 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/upload',
-    component: Layout,
-    hidden: false,
-    name: '上传',
-    meta: {title: 'uploadlll'},
-    children: [
-      {
-        path: '/picture',
-        component: () => import('@/views/scenic/picture'),
-        name: '上传图片',
-        meta: {title: '上传图片',icon: 'documentation',affix:true}
-      }
-    ]
-  },
-  {
     path: '/user',
     component: Layout,
     redirect: '/user/register',
@@ -149,9 +136,31 @@ export const asyncRoutes = [
         path: 'register',
         component: () => import('@/views/login/register'),
         name: '注册页面',
-        meta: {title:'注册页面', icon: 'documentation', affix: true,roles: ['visiter']}
+        meta: {title:'注册页面', icon: 'documentation', affix: true,roles: ['visitor']}
       }
     ]
+  },
+  {
+    path: '/manage',
+    component: Layout,
+    redirect:'/manage/users',
+    hidden: false,
+    name: '后台管理',
+    meta: {title: '后台管理',icon: 'tree',roles:['admin']},
+    children: [
+      {
+        path: 'users',
+        component: () => import('@/views/manage/users'),
+        name: '用户管理',
+        meta: {title:'用户管理',icon: 'peoples',affix: true,roles:['admin']}
+      },
+      {
+        path: 'roles',
+        component: () => import('@/views/manage/roles'),
+        name: '角色管理',
+        meta: {title:'角色管理',icon: 'people',affix: true,roles:['admin']}
+      }
+  ]
   },
 
   // 404 page must be placed at the end !!!

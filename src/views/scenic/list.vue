@@ -33,6 +33,24 @@
         prop="tag"
         label="所属类型"
       />
+      <el-table-column>
+        <template slot-scope="scope">
+          <el-button
+            type="primary"
+            size="small"
+            @click="showDetail(scope.row.id)"
+          >
+            编辑
+          </el-button>
+          <el-button
+            type="danger"
+            size="small"
+            @click="toDelete(scope.row.id)"
+          >
+            禁用
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -54,10 +72,13 @@ export default {
     methods:{
         reloadData(){
             let url = "http://localhost:8080/scenic/list"
-            request.post(url,{params:{country,scenicCategory,name}})
+            request.post(url)
             .then(response => 
-                this.scenicListDto = response.data.scenicListDto
+                this.scenicListDto = response.data
             )
+        },
+        showDetail(id){
+          this.$router.push({ path: 'scenic/editor', query: id});
         }
     }
 }

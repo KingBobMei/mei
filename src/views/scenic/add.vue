@@ -33,6 +33,26 @@
           />
         </el-select>
       </el-form-item>
+
+      <el-form-item label="上传主图">
+        <el-upload
+          class="avatar-uploader"
+          action="http://localhost:8080/upload/picture"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img
+            v-if="imageUrl"
+            :src="imageUrl"
+            class="avatar"
+          >
+          <i
+            v-else
+            class="el-icon-plus avatar-uploader-icon"
+          />
+        </el-upload>
+      </el-form-item>
             
       <el-form-item label="简介">
         <el-input
@@ -63,9 +83,11 @@ export default {
                 scenicName: "",
                 country: "",
                 tag: "",
-                context: ""
+                context: "",
+                imageUrl:""
             },
             tags: [],
+            imageUrl:"",
         }
     },
     created(){
@@ -94,13 +116,52 @@ export default {
                         message: "添加成功",
                         type: "success"
                     })
-                    this.reloadData();
+                    this.scenic = "";
+                    this.imageUrl = "";
                 }
             })
+        },
+        handleAvatarSuccess(res) {
+          this.scenic.imageUrl = res.data;
+          this.imageUrl = 'http://localhost:8080/image/' + res.data;
+        },
+        beforeAvatarUpload(file) {
+          const isPicture = (file.type === 'image/png' || file.type === 'image/gif' || file.type === 'image/jpg' || file.type === 'image/jpeg');
+          const isLt2M = file.size / 1024 / 1024 < 2;
+          if (!isPicture) {
+            this.$message.error('上传是图片的类型');
+          }
+          if (!isLt2M) {
+            this.$message.error('上传头像图片大小不能超过 2MB!');
+          }
+          return isPicture && isLt2M;
         }
     }
     
 }
 </script>
 <style scoped>
+.avatar-uploader .el-upload {
+        border: 1px dashed #409EFF;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #409EFF;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+    }
+    .avatar {
+        width: 178px;
+        height: 178px;
+        display: block;
+    }
 </style>

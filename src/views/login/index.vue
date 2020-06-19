@@ -1,6 +1,5 @@
 <template>
   <div class="login-container">
-    {{ redirect }}{{ query }}
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -11,7 +10,7 @@
     >
       <div class="title-container">
         <h3 class="title">
-          Sign In to Share Box
+          微圈驴友游平台
         </h3>
       </div>
 
@@ -68,14 +67,14 @@
         style="width:100%;margin-bottom:30px;"
         @click.native.prevent="handleLogin"
       >
-        Sign in
+        登录
       </el-button>
       <el-button
         style="width:450px;"
         type="primary"
         @click="dispatchToRegister"
       >
-        Or Sign Up
+        以游客身份登录 or 注册
       </el-button>
     </el-form>
   </div>
@@ -88,14 +87,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (value==='') {
-        callback(new Error('Please enter user name'))
+        callback(new Error('请输入用户名'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码不可少于6个字符'))
       } else {
         callback()
       }
@@ -201,8 +200,9 @@ export default {
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:rgb(204, 203, 204);
-$light_gray:rgb(14, 13, 13);
+$light_gray:rgb(0, 0, 0);
 $cursor: #fff;
+$backgroudImage:"http://localhost:8080/image/background.jpg";
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
@@ -212,6 +212,7 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  background-image: $backgroudImage;
   .el-input {
     display: inline-block;
     height: 47px;
@@ -246,12 +247,15 @@ $cursor: #fff;
 <style lang="scss" scoped>
 $bg:#fff;
 $dark_gray:#889aa4;
-$light_gray:#eee;
+$light_gray:rgb(10, 10, 10);
+$backgroudImage:"http://localhost:8080/image/background.jpg";
 
 .login-container {
+  
+  background-image: $backgroudImage;
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  // background-color: $bg;
   overflow: hidden;
 
   .login-form {

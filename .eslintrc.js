@@ -72,7 +72,6 @@ module.exports = {
     // 'new-parens': 2,
     // 'no-array-constructor': 2,
     // 'no-caller': 2,
-    'no-console': 'off',
     // 'no-class-assign': 2,
     // 'no-cond-assign': 2,
     // 'no-const-assign': 2,
@@ -142,16 +141,13 @@ module.exports = {
     // }],
     // 'no-unreachable': 2,
     // 'no-unsafe-finally': 2,
-    "generator-star-spacing": "off",
+    // "generator-star-spacing": "off",
     "no-tabs":"off",
     "no-unused-vars":"off",
     "no-console":"off",
-    "no-irregular-whitespace":"off",
+    // "no-irregular-whitespace":"off",
     "no-debugger": "off",
-    'no-unused-vars': [2, {
-      'vars': 'all',
-      'args': 'none'
-    }]
+    'no-unused-vars': 0
     // 'no-useless-call': 2,
     // 'no-useless-computed-key': 2,
     // 'no-useless-constructor': 2,

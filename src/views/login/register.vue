@@ -52,13 +52,13 @@
           style="width: 500px"
         />
       </el-form-item>
-      <el-form-item label="校验密码">
+      <!-- <el-form-item label="校验密码">
         <el-input
           v-model="repassword"
           style="width: 500px"
           placeholder="请再次输入密码"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button
           type="primary"

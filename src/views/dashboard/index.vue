@@ -1,31 +1,47 @@
 <template>
-  <div class="dashboard-container">
-    <component :is="currentRole" />
+  <div>
+    <ul
+      v-for="s in scenicList"
+      :key="s"
+    >
+      <el-input
+        v-model="s.scenicName"
+        readonly="true"
+      />
+      <br>
+      <el-image 
+        style="width: 400px; height: 400px"
+        :src="s.imageUrl"
+        :fit="fit"
+      />
+    </ul>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import adminDashboard from './admin'
-import editorDashboard from './editor'
-
+import request   from "@/utils/request";
 export default {
-  name: 'Dashboard',
-  components: { adminDashboard, editorDashboard },
-  data() {
-    return {
-      currentRole: 'adminDashboard'
+  data(){
+    return{
+      scenicList:[],
+      fit:"cover"
     }
   },
-  computed: {
-    ...mapGetters([
-      'roles'
-    ])
+  created(){
+    this.reloadData();
   },
-  created() {
-    if (!this.roles.includes('admin')) {
-      this.currentRole = 'editorDashboard'
+  methods:{
+    reloadData(){
+      let url = 'scenic/getIndex';
+            request.post(url)
+            .then(response => 
+                this.scenicList = response.data
+            )
     }
   }
 }
 </script>
+<style scoped>
+
+</style>
+
