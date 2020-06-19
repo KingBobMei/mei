@@ -7,6 +7,7 @@
       <el-input
         v-model="s.scenicName"
         readonly="true"
+        style="font-size:20px;font-family:'Microsoft YaHei'"
       />
       <br>
       <el-image 
@@ -14,6 +15,24 @@
         :src="s.imageUrl"
         :fit="fit"
       />
+      <el-input
+        v-model="s.context"
+        type="textarea"
+        :autosize="{ minRows: 2, maxRows: 20}"
+        label="介绍"
+        readonly="true"
+        style="width: 800px; height: 500px"
+        class="right"
+      />
+      <br>
+      更新时间：<el-input
+        v-model="s.createTime"
+        style="width: 200px;border:0px"
+        readonly="true"
+      />
+      <br><br><br><br>
+      <hr>
+      <br>
     </ul>
   </div>
 </template>
@@ -42,6 +61,8 @@ export default {
 }
 </script>
 <style scoped>
-
+.right{
+    float: right;
+}
 </style>
 

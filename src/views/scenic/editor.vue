@@ -33,9 +33,10 @@
         </el-upload>
       </el-form-item>
       <el-form-item label="景点介绍">
-        <textarea
+        <el-input
           v-model="scenicDTO.context"
-          style="width: 800px; height: 100px"
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 10}"
         />
       </el-form-item>
       <el-form-item>

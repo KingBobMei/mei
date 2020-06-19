@@ -58,7 +58,7 @@
         <el-input
           v-model="scenic.context"
           type="textarea"
-          :rows="2"
+          :autosize="{ minRows: 2, maxRows: 10}"
           placeholder="请输入内容"
         />
       </el-form-item>
